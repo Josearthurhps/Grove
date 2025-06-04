@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Configurações básicas da página -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camiseta Preta GROVE</title>
+
+  <!-- Tailwind CSS para estilização rápida -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- Fonte personalizada no estilo gótico -->
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos CSS específicos da página -->
+  <style>
+    /* Fonte personalizada */
+    .gothic-font { font-family: 'UnifrakturCook', cursive; }
+
+    /* Galeria horizontal de imagens */
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo das imagens da galeria */
+    .gallery img {
+      flex-shrink: 0;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ff88;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* Área de seleção de cores */
+    .color-options {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .color-square {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      box-shadow: 0 0 5px #00ff88;
+      transition: border-color 0.3s ease;
+    }
+
+    .color-square.selected { border-color: #00ff88; }
+
+    /* Cores disponíveis */
+    .preta { background-color: #000; }
+    .branca { background-color: #fff; border: 2px solid #ccc; }
+    .cinza  { background-color: #888; } /* não usada, mas definida */
+  </style>
+</head>
+
+<body class="bg-gray-900 text-white p-6">
+  <!-- Título da página -->
+  <h1 class="gothic-font text-2xl font-bold text-green-700 mb-4 text-center">Camiseta Preta GROVE</h1>
+
+  <!-- Galeria de imagens do produto -->
+  <div class="gallery" id="gallery"></div>
+
+  <!-- Opções de cor do produto -->
+  <div class="color-options" id="colorOptions">
+    <div class="color-square preta selected" data-color="preta" title="Preta"></div>
+    <div class="color-square branca" data-color="branca" title="Branca"></div>
+  </div>
+
+  <!-- Descrição e preço do produto -->
+  <p class="text-gray-300 mb-2 text-center" id="description">Oversized, algodão premium. Estilo firme, presença de rua.</p>
+  <p class="text-green-500 font-semibold mb-6 text-center" id="price">R$ 129,90</p>
+
+  <!-- Formulário de compra -->
+  <form id="orderForm" class="max-w-xs mx-auto space-y-4">
+    <!-- Seleção de cor (desabilitada, muda com clique nos quadradinhos) -->
+    <div>
+      <label for="cor" class="block mb-1 font-semibold">Cor</label>
+      <select id="cor" name="cor" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-600" disabled>
+        <option value="preta" selected>Preta</option>
+        <option value="branca">Branca</option>
+      </select>
+    </div>
+
+    <!-- Seleção de tamanho -->
+    <div>
+      <label for="tamanho" class="block mb-1 font-semibold">Tamanho</label>
+      <select id="tamanho" name="tamanho" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-600">
+        <option value="pp">PP</option>
+        <option value="p">P</option>
+        <option value="m" selected>M</option>
+        <option value="g">G</option>
+        <option value="gg">GG</option>
+      </select>
+    </div>
+
+    <!-- Botão de compra que redireciona para o WhatsApp -->
+    <button type="submit" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-2 rounded">
+      Comprar
+    </button>
+  </form>
+
+  <!-- Script responsável por trocar imagens e redirecionar no WhatsApp -->
+  <script>
+    // Imagens por cor
+    const imagensPorCor = {
+      preta: ["camiseta_preta_grove.jpg", "Imagens/camiseta_preta_2.jpg", "Imagens/camiseta_preta_3.jpg"],
+      branca: ["Imagens/camiseta_branca_1.jpg", "Imagens/camiseta_branca_2.jpg", "Imagens/camiseta_branca_3.jpg"],
+    };
+
+    // Descrição por cor
+    const descricaoPorCor = {
+      preta: "Oversized, algodão premium. Estilo firme, presença de rua.",
+      branca: "Oversized, algodão premium. Cor branca clássica, estilo firme.",
+    };
+
+    // Preço por cor
+    const precoPorCor = {
+      preta: "R$ 129,90",
+      branca: "R$ 129,90",
+      cinza: "R$ 129,90"  // cor cinza não está visível mas está registrada aqui
+    };
+
+    // Elementos do DOM
+    const gallery = document.getElementById("gallery");
+    const colorOptions = document.getElementById("colorOptions");
+    const selectCor = document.getElementById("cor");
+    const descricao = document.getElementById("description");
+    const preco = document.getElementById("price");
+
+    // Função para trocar imagens e textos conforme a cor selecionada
+    function carregarImagens(cor) {
+      gallery.innerHTML = "";
+      imagensPorCor[cor].forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Camiseta cor ${cor}`;
+        img.loading = "lazy";
+        gallery.appendChild(img);
+      });
+      descricao.textContent = descricaoPorCor[cor];
+      preco.textContent = precoPorCor[cor];
+      selectCor.value = cor;
+    }
+
+    // Inicializa com a cor preta
+    carregarImagens("preta");
+
+    // Evento de clique nos quadradinhos de cor
+    colorOptions.querySelectorAll(".color-square").forEach(square => {
+      square.addEventListener("click", () => {
+        colorOptions.querySelectorAll(".color-square").forEach(sq => sq.classList.remove("selected"));
+        square.classList.add("selected");
+        const corSelecionada = square.getAttribute("data-color");
+        carregarImagens(corSelecionada);
+      });
+    });
+
+    // Envio do formulário: redireciona para o WhatsApp com a mensagem de compra
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const cor = document.getElementById("cor").value;
+      const tamanho = document.getElementById("tamanho").value;
+      const msg = `Olá! Quero comprar a camiseta ${cor}, tamanho ${tamanho}.`;
+      window.location.href = `https://wa.me/5511962674550?text=${encodeURIComponent(msg)}`;
+    });
+  </script>
+</body>
+</html>

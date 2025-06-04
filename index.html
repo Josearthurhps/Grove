@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GROVE - Nascido da Rua</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+  <div class="content">
+    <h1>GROVE</h1>
+    <form id="login-form">
+      <label for="drop-select">Escolha o Drop:</label><br />
+      <select id="drop-select" required>
+        <option value="" disabled selected>Selecione o drop</option>
+        <option value="drop001">Drop 001</option>
+        <option value="drop002">Drop 002</option>
+      </select><br /><br />
+      <input type="password" id="password" placeholder="Digite a senha do drop" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <form action="https://formsubmit.co/grovestyles61@gmail.com" method="POST" style="margin-top: 30px;">
+      <input type="email" name="email" placeholder="Digite seu e-mail para pedir acesso" required />
+      <button type="submit">Solicitar Senha</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

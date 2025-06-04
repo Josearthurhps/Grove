@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: 'UnifrakturCook', cursive;
+  background-color: #0f0f0f;
+  color: #d1ffd6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.logo { margin-top: 20px; width: 120px; height: 120px; object-fit: contain; }
+.content {
+  background-color: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00ff88;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+h1 { font-size: 2.5em; margin-bottom: 20px; color: #69f0ae; }
+input, button, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+input[type="password"], input[type="email"], select {
+  background-color: #333;
+  color: #fff;
+}
+button {
+  background-color: #4b0082;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background-color: #660099; }
+@media (max-width: 480px) {
+  body { padding: 10px; }
+  .content { padding: 20px; max-width: 100%; }
+  h1 { font-size: 2em; }
+  input, button, select { font-size: 0.9em; padding: 10px; }
+  .logo { width: 100px; height: 100px; margin-top: 10px; }
+}
